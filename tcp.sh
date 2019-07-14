@@ -4,11 +4,12 @@ export PATH
 
 #=================================================
 #	System Required: CentOS 6/7,Debian 8/9,Ubuntu 16+
-#	Description: BBR+BBRmagic+BBRplus+Lotserver
+#	Description: BBR+BBRmagic+BBRplus+Lotserver (Lot not tested)
 #	Version: 1.3.1
 #	Author: 千影,cx9208
 #	English: Venmade
 #	Blog: https://www.94ish.me/
+#	Hosting: s://dignusdata.center/vps
 #=================================================
 
 sh_ver="1.3.1"
@@ -308,21 +309,21 @@ net.ipv4.ip_forward = 1">>/etc/sysctl.conf
 }
 #Update script
 Update_Shell(){
-	echo -e "当前版本为 [ ${sh_ver} ]，开始检测最新版本..."
+	echo -e "The current version is [ ${sh_ver} ]，Start detecting the latest version..."
 	sh_new_ver=$(wget --no-check-certificate -qO- "http://${github}/tcp.sh"|grep 'sh_ver="'|awk -F "=" '{print $NF}'|sed 's/\"//g'|head -1)
-	[[ -z ${sh_new_ver} ]] && echo -e "${Error} 检测最新版本失败 !" && start_menu
+	[[ -z ${sh_new_ver} ]] && echo -e "${Error} Failed to detect the latest version !" && start_menu
 	if [[ ${sh_new_ver} != ${sh_ver} ]]; then
-		echo -e "发现新版本[ ${sh_new_ver} ]，是否更新？[Y/n]"
-		read -p "(默认: y):" yn
+		echo -e "Discover new version[ ${sh_new_ver} ]，Whether to update？[Y/n]"
+		read -p "(Default: y):" yn
 		[[ -z "${yn}" ]] && yn="y"
 		if [[ ${yn} == [Yy] ]]; then
 			wget -N --no-check-certificate http://${github}/tcp.sh && chmod +x tcp.sh
-			echo -e "脚本已更新为最新版本[ ${sh_new_ver} ] !"
+			echo -e "The script has been updated to the latest version[ ${sh_new_ver} ] !"
 		else
 			echo && echo "	已取消..." && echo
 		fi
 	else
-		echo -e "当前已是最新版本[ ${sh_new_ver} ] !"
+		echo -e "Currently the latest version[ ${sh_new_ver} ] !"
 		sleep 5s
 	fi
 }
@@ -425,16 +426,16 @@ detele_kernel(){
 	elif [[ "${release}" == "debian" || "${release}" == "ubuntu" ]]; then
 		deb_total=`dpkg -l | grep linux-image | awk '{print $2}' | grep -v "${kernel_version}" | wc -l`
 		if [ "${deb_total}" > "1" ]; then
-			echo -e "检测到 ${deb_total} 个其余内核，开始卸载..."
+			echo -e "detected ${deb_total} Remaining kernel，Start uninstalling..."
 			for((integer = 1; integer <= ${deb_total}; integer++)); do
 				deb_del=`dpkg -l|grep linux-image | awk '{print $2}' | grep -v "${kernel_version}" | head -${integer}`
-				echo -e "开始卸载 ${deb_del} 内核..."
+				echo -e "Start uninstalling ${deb_del} Kernel..."
 				apt-get purge -y ${deb_del}
-				echo -e "卸载 ${deb_del} 内核卸载完成，继续..."
+				echo -e "Uninstall ${deb_del} Kernel uninstallation completed，carry on..."
 			done
-			echo -e "内核卸载完毕，继续..."
+			echo -e "The kernel is uninstalled，carry on..."
 		else
-			echo -e " 检测到 内核 数量不正确，请检查 !" && exit 1
+			echo -e " The number of kernels detected is incorrect，Please check !" && exit 1
 		fi
 	fi
 }
@@ -444,13 +445,13 @@ BBR_grub(){
 	if [[ "${release}" == "centos" ]]; then
         if [[ ${version} = "6" ]]; then
             if [ ! -f "/boot/grub/grub.conf" ]; then
-                echo -e "${Error} /boot/grub/grub.conf 找不到，请检查."
+                echo -e "${Error} /boot/grub/grub.conf Can't find，Please check."
                 exit 1
             fi
             sed -i 's/^default=.*/default=0/g' /boot/grub/grub.conf
         elif [[ ${version} = "7" ]]; then
             if [ ! -f "/boot/grub2/grub.cfg" ]; then
-                echo -e "${Error} /boot/grub2/grub.cfg 找不到，请检查."
+                echo -e "${Error} /boot/grub2/grub.cfg Can't find，Please check."
                 exit 1
             fi
             grub2-set-default 0
