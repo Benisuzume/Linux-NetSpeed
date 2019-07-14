@@ -12,7 +12,7 @@ export PATH
 #=================================================
 
 sh_ver="1.3.1"
-github="raw.githubusercontent.com/chiakge/Linux-NetSpeed/master"
+github="raw.githubusercontent.com/Benisuzume/Linux-NetSpeed/master"
 
 Green_font_prefix="\033[32m" && Red_font_prefix="\033[31m" && Green_background_prefix="\033[42;37m" && Red_background_prefix="\033[41;37m" && Font_color_suffix="\033[0m"
 Info="${Green_font_prefix}[Information]${Font_color_suffix}"
@@ -169,7 +169,7 @@ startbbrmod_nanqinlang(){
 	if [[ "${release}" == "centos" ]]; then
 		yum install -y make gcc
 		mkdir bbrmod && cd bbrmod
-		wget -N --no-check-certificate https://raw.githubusercontent.com/chiakge/Linux-NetSpeed/master/bbr/centos/tcp_nanqinlang.c
+		wget -N --no-check-certificate https://raw.githubusercontent.com/Benisuzume/Linux-NetSpeed/master/bbr/centos/tcp_nanqinlang.c
 		echo "obj-m := tcp_nanqinlang.o" > Makefile
 		make -C /lib/modules/$(uname -r)/build M=`pwd` modules CC=/usr/bin/gcc
 		chmod +x ./tcp_nanqinlang.ko
@@ -186,7 +186,7 @@ startbbrmod_nanqinlang(){
 		fi
 		apt-get -y install make gcc-4.9
 		mkdir bbrmod && cd bbrmod
-		wget -N --no-check-certificate https://raw.githubusercontent.com/chiakge/Linux-NetSpeed/master/bbr/tcp_nanqinlang.c
+		wget -N --no-check-certificate https://raw.githubusercontent.com/Benisuzume/Linux-NetSpeed/master/bbr/tcp_nanqinlang.c
 		echo "obj-m := tcp_nanqinlang.o" > Makefile
 		make -C /lib/modules/$(uname -r)/build M=`pwd` modules CC=/usr/bin/gcc-4.9
 		install tcp_nanqinlang.ko /lib/modules/$(uname -r)/kernel
@@ -668,6 +668,6 @@ check_status(){
 #############System detection component#############
 check_sys
 check_version
-[[ ${release} != "debian" ]] && [[ ${release} != "ubuntu" ]] && [[ ${release} != "centos" ]] && echo -e "${Error} 本脚本不支持当前系统 ${release} !" && exit 1
+[[ ${release} != "debian" ]] && [[ ${release} != "ubuntu" ]] && [[ ${release} != "centos" ]] && echo -e "${Error} This script does not support the current system ${release} !" && exit 1
 start_menu
 
