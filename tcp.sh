@@ -9,7 +9,7 @@ export PATH
 #	Author: 千影,cx9208
 #	English: Venmade
 #	Blog: https://www.94ish.me/
-#	Hosting: s://dignusdata.center/vps
+#	Hosting: https://dignusdata.center/vps
 #=================================================
 
 sh_ver="1.3.1"
