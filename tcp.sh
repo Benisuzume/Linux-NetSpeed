@@ -80,7 +80,7 @@ installbbrplus(){
 	fi
 }
 
-#安装Lotserver内核
+#Install the Lotserver kernel
 installlot(){
 	if [[ "${release}" == "centos" ]]; then
 		rpm --import http://${github}/lotserver/${release}/RPM-GPG-KEY-elrepo.org
@@ -97,11 +97,11 @@ installlot(){
 	fi
 	detele_kernel
 	BBR_grub
-	echo -e "${Tip} 重启VPS后，请重新运行脚本开启${Red_font_prefix}Lotserver${Font_color_suffix}"
-	stty erase '^H' && read -p "需要重启VPS后，才能开启Lotserver，是否现在重启 ? [Y/n] :" yn
+	echo -e "${Tip} After restarting the VPS，Please re-run the script to open${Red_font_prefix}Lotserver${Font_color_suffix}"
+	stty erase '^H' && read -p "Need to restart the VPS，In order to open the Lotserver, whether to restart now ? [Y/n] :" yn
 	[ -z "${yn}" ] && yn="y"
 	if [[ $yn == [Yy] ]]; then
-		echo -e "${Info} VPS 重启中..."
+		echo -e "${Info} VPS Restart..."
 		reboot
 	fi
 }
@@ -202,7 +202,7 @@ startbbrmod_nanqinlang(){
 	echo -e "${Info}Magic version BBR launched successfully！"
 }
 
-#启用Lotserver
+#Enable Lotserver
 startlotserver(){
 	remove_all
 	if [[ "${release}" == "centos" ]]; then
@@ -336,15 +336,15 @@ echo && echo -e " TCP Acceleration One-click installation management script ${Re
   
  ${Green_font_prefix}0.${Font_color_suffix} Upgrade script
 ————————————Kernel management————————————
- ${Green_font_prefix}1.${Font_color_suffix} Install BBR/BBR magic modified kernel
+ ${Green_font_prefix}1.${Font_color_suffix} Install the BBR/BBR magic modified kernel
  ${Green_font_prefix}2.${Font_color_suffix} Install the BBRplus kernel 
- ${Green_font_prefix}3.${Font_color_suffix} 安装 Lotserver(锐速)内核
+ ${Green_font_prefix}3.${Font_color_suffix} Install the Lotserver kernel
 ————————————Accelerated management————————————
  ${Green_font_prefix}4.${Font_color_suffix} Acceleration with BBR
  ${Green_font_prefix}5.${Font_color_suffix} Acceleration with BBR Magic
  ${Green_font_prefix}6.${Font_color_suffix} Acceleration with violent BBR magic revision (some systems are not supported)
  ${Green_font_prefix}7.${Font_color_suffix} Acceleration with BBRplus
- ${Green_font_prefix}8.${Font_color_suffix} 使用Lotserver(锐速)加速
+ ${Green_font_prefix}8.${Font_color_suffix} Acceleration with Lotserver
 ————————————Miscellaneous management————————————
  ${Green_font_prefix}9.${Font_color_suffix} Unload all acceleration
  ${Green_font_prefix}10.${Font_color_suffix} System configuration optimization
@@ -412,16 +412,16 @@ detele_kernel(){
 	if [[ "${release}" == "centos" ]]; then
 		rpm_total=`rpm -qa | grep kernel | grep -v "${kernel_version}" | grep -v "noarch" | wc -l`
 		if [ "${rpm_total}" > "1" ]; then
-			echo -e "检测到 ${rpm_total} 个其余内核，开始卸载..."
+			echo -e "detected ${rpm_total} Remaining kernel，Start uninstalling..."
 			for((integer = 1; integer <= ${rpm_total}; integer++)); do
 				rpm_del=`rpm -qa | grep kernel | grep -v "${kernel_version}" | grep -v "noarch" | head -${integer}`
-				echo -e "开始卸载 ${rpm_del} 内核..."
+				echo -e "Start uninstalling ${rpm_del} 内核..."
 				rpm --nodeps -e ${rpm_del}
-				echo -e "卸载 ${rpm_del} 内核卸载完成，继续..."
+				echo -e "Uninstall ${rpm_del} Kernel uninstallation completed，carry on..."
 			done
-			echo --nodeps -e "内核卸载完毕，继续..."
+			echo --nodeps -e "The kernel is uninstalled，carry on..."
 		else
-			echo -e " 检测到 内核 数量不正确，请检查 !" && exit 1
+			echo -e " The number of kernels detected is incorrect，Please check !" && exit 1
 		fi
 	elif [[ "${release}" == "debian" || "${release}" == "ubuntu" ]]; then
 		deb_total=`dpkg -l | grep linux-image | awk '{print $2}' | grep -v "${kernel_version}" | wc -l`
@@ -565,7 +565,7 @@ check_sys_Lotsever(){
 			kernel_version="3.10.0-327"
 			installlot
 		else
-			echo -e "${Error} Lotsever不支持当前系统 ${release} ${version} ${bit} !" && exit 1
+			echo -e "${Error} Lotsever Does not support the current system ${release} ${version} ${bit} !" && exit 1
 		fi
 	elif [[ "${release}" == "debian" ]]; then
 		if [[ ${version} = "7" || ${version} = "8" ]]; then
@@ -582,7 +582,7 @@ check_sys_Lotsever(){
 				installlot
 			fi
 		else
-			echo -e "${Error} Lotsever不支持当前系统 ${release} ${version} ${bit} !" && exit 1
+			echo -e "${Error} Lotsever Does not support the current system ${release} ${version} ${bit} !" && exit 1
 		fi
 	elif [[ "${release}" == "ubuntu" ]]; then
 		if [[ ${version} -ge "12" ]]; then
@@ -594,10 +594,10 @@ check_sys_Lotsever(){
 				installlot
 			fi
 		else
-			echo -e "${Error} Lotsever不支持当前系统 ${release} ${version} ${bit} !" && exit 1
+			echo -e "${Error} Lotsever Does not support the current system ${release} ${version} ${bit} !" && exit 1
 		fi
 	else
-		echo -e "${Error} Lotsever不支持当前系统 ${release} ${version} ${bit} !" && exit 1
+		echo -e "${Error} Lotsever Does not support the current system ${release} ${version} ${bit} !" && exit 1
 	fi
 }
 
@@ -618,12 +618,12 @@ check_status(){
 		if [[ -e /appex/bin/lotServer.sh ]]; then
 			run_status=`bash /appex/bin/lotServer.sh status | grep "LotServer" | awk  '{print $3}'`
 			if [[ ${run_status} = "running!" ]]; then
-				run_status="启动成功"
+				run_status="Successful startup"
 			else 
-				run_status="启动失败"
+				run_status="Startup failed"
 			fi
 		else 
-			run_status="未安装加速模块"
+			run_status="Acceleration module not installed"
 		fi
 	elif [[ ${kernel_status} == "BBR" ]]; then
 		run_status=`grep "net.ipv4.tcp_congestion_control" /etc/sysctl.conf | awk -F "=" '{print $2}'`
