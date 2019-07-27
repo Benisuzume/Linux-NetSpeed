@@ -5,14 +5,14 @@ export PATH
 #=================================================
 #	System Required: CentOS 6/7,Debian 8/9,Ubuntu 16+
 #	Description: BBR+BBRmagic+BBRplus+Lotserver (Lot not tested)
-#	Version: 1.3.1
+#	Version: 1.3.2
 #	Author: 千影,cx9208
 #	English: Venmade
 #	Blog: https://www.94ish.me/
 #	Hosting: https://dignusdata.center/vps
 #=================================================
 
-sh_ver="1.3.1"
+sh_ver="1.3.2"
 github="raw.githubusercontent.com/Benisuzume/Linux-NetSpeed/master"
 
 Green_font_prefix="\033[32m" && Red_font_prefix="\033[31m" && Green_background_prefix="\033[42;37m" && Red_background_prefix="\033[41;37m" && Font_color_suffix="\033[0m"
